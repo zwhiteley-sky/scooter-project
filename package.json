@@ -16,6 +16,7 @@
     "url": "https://github.com/zwhiteley-sky/scooter-project/issues"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.23.0",
     "jest": "^29.7.0"
   }
 }
