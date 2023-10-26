@@ -1,0 +1,1 @@
+const { AuthManager } = require("./memory");
