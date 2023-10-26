@@ -20,4 +20,18 @@ export class Station {
     get rentable_scooters() {
         return this.#scooters.filter(s => s.is_rentable);
     }
+
+    rent_scooter() {
+        const idx = this.#scooters.findIndex(s => s.is_rentable);
+
+        // If there are no rentable scooters available
+        if (idx === -1) return null;
+
+        const scooter = this.#scooters[idx];
+
+        // Remove the scooter so it is not re-rented
+        this.#scooters.splice(idx, 1);
+
+        return scooter;
+    }
 }

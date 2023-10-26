@@ -29,6 +29,11 @@ export class User {
         return this.#scooter;
     }
 
+    set scooter(scooter) {
+        if (this.#scooter) throw new Error("User already has a scooter");
+        this.#scooter = scooter;
+    }
+
     login(password) {
         if (this.logged_in) return false;
         if (password !== this.#password) return false;
@@ -39,5 +44,11 @@ export class User {
 
     logout() {
         this.#logged_in = false;
+    }
+
+    take_scooter() {
+        const scooter = this.#scooter;
+        this.#scooter = null;
+        return scooter;
     }
 }

@@ -36,3 +36,23 @@ test("ensure rentable_scooters property only returns rentable scooters", () => {
 
     expect(station.rentable_scooters.map(s => s.serial)).toEqual([good_scooter_1.serial, good_scooter_2.serial]);
 });
+
+test("rent_scooter() returns correct scooter", () => {
+    const station = new Station();
+    const good_scooter_1 = new Scooter();
+    const good_scooter_2 = new Scooter();
+    station.add_scooter(good_scooter_1);
+    station.add_scooter(good_scooter_2);
+    
+    {
+        const broken_scooter = new Scooter();
+        broken_scooter.break();
+        station.add_scooter(broken_scooter);
+    }   
+
+    expect(station.rent_scooter()).toBe(good_scooter_1);
+    expect(station.rentable_scooters.length).toBe(1);
+    expect(station.rent_scooter()).toBe(good_scooter_2);
+    expect(station.rentable_scooters.length).toBe(0);
+    expect(station.rent_scooter()).toBeNull();
+});
