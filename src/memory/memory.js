@@ -10,6 +10,34 @@ class Memory {
         this.scooters = {};
     }
 
+    static seed(stations) {
+        const mem = new Memory();
+
+        // Set up stations (as stations cannot be created by users,
+        // the database will have to be seeded before it can be used
+        // -- as this is for testing, we need to provide a way for
+        // tests to seed the database).
+        for (const station of stations) {
+            const raw_station = mem.stations[station.id] = {
+                id: station.id,
+                scooter_serials: []
+            };
+
+            for (const scooter of station.scooters) {
+                raw_station.scooter_serials.push(scooter.serial);
+                mem.scooters[scooter.serial] = {
+                    serial: scooter.serial,
+                    charge: scooter.charge,
+                    broken: scooter.broken,
+                    status: "stored",
+                    stored_on: scooter.stored_on.getTime()
+                };
+            }
+        }
+
+        return mem;
+    }
+
     get_token(token_str) {
         const token = this.tokens[token_str];
         const user = this.get_user(token.username);
@@ -36,6 +64,6 @@ class Memory {
     }
 }
 
-const global_memory = new Memory();
+const global_memory = Memory.seed(require("../seed.js"));
 
 module.exports = { global_memory, Memory };

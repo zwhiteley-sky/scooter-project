@@ -33,6 +33,15 @@ class RentedScooter extends Scooter {
     get rented_on() {
         return new Date(this.#rented_on);
     }
+
+    objectify() {
+        return {
+            serial: this.serial,
+            charge: this.charge,
+            broken: this.broken,
+            rented_on: this.#rented_on
+        };
+    }
 }
 
 class StoredScooter extends Scooter {
@@ -45,6 +54,15 @@ class StoredScooter extends Scooter {
 
     get stored_on() {
         return this.#stored_on !== null ? new Date(this.#stored_on) : undefined;
+    }
+
+    objectify() {
+        return {
+            serial: this.serial,
+            charge: this.charge,
+            broken: this.broken,
+            stored_on: this.#stored_on
+        };
     }
 }
 

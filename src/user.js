@@ -20,6 +20,14 @@ class User {
     get scooter() {
         return this.#scooter;
     }
+
+    objectify() {
+        return {
+            username: this.#username,
+            age: this.#age,
+            scooter: this.#scooter?.objectify()
+        };
+    }
 }
 
 module.exports = User;
