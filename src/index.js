@@ -47,6 +47,17 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get("/me", (req, res) => {
+    if (!req.user) {
+        res.status(401).send({
+            error_code: ERR_NO_AUTH,
+            error_message: "authorization required to perform this action"
+        });
+    } else {
+        res.status(200).send(req.user.objectify());
+    }
+});
+
 app.post("/rent_scooter", (req, res) => {
     if (!req.user) {
         res.status(401).send({
